@@ -1,0 +1,25 @@
+{
+  "name": "cacao-extension",
+  "version": "0.1.0",
+  "description": "Cacao (CORS Access-Control-Allow-Origin) Browser Extension",
+  "main": "index.js",
+  "module": "background.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cp node_modules/webextension-polyfill/dist/browser-polyfill.min.js .&&tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelfig/cacao-extension.git"
+  },
+  "author": "Michael FIG <michael+cacao@fig.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelfig/cacao-extension/issues"
+  },
+  "homepage": "https://github.com/michaelfig/cacao-extension#readme",
+  "devDependencies": {
+    "web-ext-types": "^3.0.0",
+    "webextension-polyfill": "^0.3.1"
+  }
+}

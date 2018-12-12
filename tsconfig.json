@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "module": "umd",
+        "allowJs": false,
+        "esModuleInterop": true,
+        "target": "es5",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "baseUrl": ".",
+        "lib": [
+            "es6",
+            "es2017",
+            "dom"
+        ],
+        "paths": {
+            "*": [
+                "node_modules/*",
+                "src/types/*"
+            ]
+        },
+        "types": [
+            "web-ext-types"
+        ],
+        "typeRoots": [
+            "node_modules/@types",
+            "node_modules/web-ext-types"
+        ]
+    },
+    "include": [
+        "*"
+    ]
+}
