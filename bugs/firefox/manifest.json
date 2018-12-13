@@ -1,0 +1,19 @@
+{
+
+    "manifest_version": 2,
+    "name": "Firefox CORS Bug",
+    "description": "Access-Control-Allow-Origin rewrite fails.",
+    "version": "1.0",
+  
+    "background": {
+      "scripts": [
+        "cors-rewrite.js"
+      ]
+    },
+  
+    "permissions": ["webRequest", "webRequestBlocking",
+        "http://127.0.0.1/*"
+    ]
+  
+  }
+  

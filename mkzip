@@ -1,0 +1,5 @@
+#! /bin/sh
+rm -rf build cacao-extension.zip
+mkdir build
+cp -a manifest.json *.js *.png build/
+(cd build && zip ../cacao-extension.zip *)

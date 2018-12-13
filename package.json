@@ -1,6 +1,6 @@
 {
   "name": "cacao-extension",
-  "version": "0.1.0",
+  "version": "0.2.0-a1",
   "description": "Cacao (CORS Access-Control-Allow-Origin) Browser Extension",
   "main": "index.js",
   "module": "background.ts",

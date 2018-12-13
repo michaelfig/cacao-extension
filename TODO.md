@@ -1,6 +1,6 @@
 * Blocking Chrome issue: Proxy PAC scripts are not called for localhost (or 127.0.0.1).  This means that Cacao cannot be used for its intended function: to allow the fetch API to fetch localhost URLs that are proxied to remote hosts.
 
-* Blocking Firefox issue: a webextension cannot set "Access-Control-Allow-Origin: *" in browser.webRequest.onHeadersReceived: it is simply ignored.  This means Cacao cannot be used for its intended function: to allow the fetch API to fetch localhost URLs that are cross-origin.
+* Blocking Firefox issue: a browser.webRequest listener registered for `http://127.0.0.1/*` is not called when the origin of the document is not localhost or file://.  This means Cacao cannot be used for its intended function: to allow the fetch API to fetch localhost URLs that are cross-origin.
 
 * Report the above issues and make note of their issue number in the point above.
 
