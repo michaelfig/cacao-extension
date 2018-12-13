@@ -6,18 +6,14 @@
     "description": "Cacao (CORS Access-Control-Allow-Origin) Proxy",
     "homepage_url": "https://github.com/michaelfig/cacao-extension",
     "icons": {
-        "48": "cacao.svg",
-        "96": "cacao.svg"
-    },
-
-    "applications": {
-        "gecko": {
-          "strict_min_version": "56.0a1"
-        }
+        "48": "cacao48.svg",
+        "96": "cacao96.svg"
     },
 
     "permissions": [
         "http://127.0.0.1/*",
+        "http://localhost/*",
+        "http://cacao.local/*",
         "proxy",
         "webRequest",
         "webRequestBlocking"

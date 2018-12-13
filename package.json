@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/michaelfig/cacao-extension#readme",
   "devDependencies": {
+    "typescript": "^3.2.2",
     "web-ext-types": "^3.0.0",
     "webextension-polyfill": "^0.3.1"
   }
