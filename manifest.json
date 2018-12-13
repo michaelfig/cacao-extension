@@ -1,13 +1,13 @@
 {
     "manifest_version": 2,
-    "name": "Cacao",
-    "version": "0.1.0",
+    "name": "Cacao CORS Proxy",
+    "version": "0.1.1",
 
     "description": "Cacao (CORS Access-Control-Allow-Origin) Proxy",
     "homepage_url": "https://github.com/michaelfig/cacao-extension",
     "icons": {
-        "48": "cacao48.svg",
-        "96": "cacao96.svg"
+        "48": "cacao48.png",
+        "96": "cacao96.png"
     },
 
     "permissions": [

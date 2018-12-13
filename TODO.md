@@ -5,5 +5,3 @@
 * Report the above issues and make note of their issue number in the point above.
 
 * After those issues are resolved, implement a options_ui page.  Add the "storage" manifest permission, and use it to communicate options.  See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/options_ui
-
-* Fix the Cacao icons to be cacao48.ico, cacao96.ico instead of cacao.svg so that it works on Chrome.
