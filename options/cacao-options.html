@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cacao (CORS Access-Control-Allow-Origin) Browser Extension</title>
+        <script src="../browser-polyfill.min.js"></script>
+    </head>
+    <body>
+        <section>
+            <button id="save">Save Settings</button>
+            <button id="reset">Reset Settings</button>
+            <span><input type="checkbox" id="whitelistDebug" /><label for="whitelistDebug">Debug Cacao whitelist matching</label></span>
+        </section>
+        <section>
+            <span>Origin match patterns on which to enable Cacao Fetch API:</span>
+            <textarea id="whitelist" rows="5" cols="50"></textarea>
+        </section>
+
+        <section>
+            <span>Magic hostports intercepted by Cacao Fetch API:</span>
+            <textarea id="magic" rows="3" cols="50"></textarea>
+        </section>
+
+        <section>
+            <span><code>[/PATH=]URL</code> map entries for magic URLs:</span>
+            <textarea id="mappings" rows="5" cols="50"></textarea>
+        </section>
+
+        <script src="cacao-options.js"></script>
+    </body>
+</html>

@@ -1,78 +1,109 @@
-////////////////////////////////
-// FIXME: Derive from config.
-const enabledOrigins = [
-    `https://v5.poc.ts.liveblockauctions.com/ms/publish.html`,
-    `http://localhost:8080/publish.html`,
-//    `file:///Users/michael/src/*`
-];
-
-const pathMap = {
-    '/mjpeg': 'http://216.8.159.21/mjpg/video.mjpg',
-    '/cam1': 'http://192.168.100.1/mjpeg',
-    '/cam2': 'http://192.168.100.2/-wvhttp-01-/video.cgi',
-    '/cam3': 'http://root:VB-C300@192.168.100.3/-wvhttp-01-/GetOneShot?frame_count=0',
-    '/cam4': 'http://192.168.100.4/-wvhttp-01-/video.cgi',
+interface CacaoSettings {
+    [key: string]: any;
+    whitelist: string[];
+    magic: string[];
+    pathMap: {[path: string]: string};
+    whitelistDebug: boolean;
 };
 
-const proxyHosts = ['127.0.0.1:9000', 'localhost:9000'];
+const defaultSettings : CacaoSettings = {
+    whitelist: ['*://localhost:8080/publish.html'],
+    magic: ['localhost:9000', '127.0.0.1:9000'],
+    pathMap: {'': 'https://example.com'},
+    whitelistDebug: false,
+};
 
-const whitelistDebug = false;
-/////////////////////////////////
-
-const href = document.URL;
-const currentUrl = new URL(href);
-
-function wlDebug(...args: any[]) {
-    if (whitelistDebug) {
-        console.log(...args);
-    }
-}
-
-function buildRegExp(pattern: string, toAppend = '') {
-    const re = pattern.replace(/[\\\*\$\^\.\*\+]/g, (substring) => {
-        if (substring === '*') {
-            return '.*';
+browser.storage.local.get()
+    .then((storedSettings: CacaoSettings) => {
+        const settings: CacaoSettings = {
+            ...defaultSettings,
+            ...storedSettings
+        };
+        if (!storedSettings) {
+            console.log(`Cacao initializing default settings`);
+            browser.storage.local.set(settings);
         }
-        else {
-            return '\\' + substring;
-        }
+
+        handleInit(settings);
+    })
+    .catch(e => {
+        console.error(`Cacao cannot load settings`, e);
     });
-    return new RegExp(`^${re}${toAppend}\$`, 'i');
-}
 
-let doInstall = false;
-for (const urlStr of enabledOrigins) {
-    const url = new URL(urlStr);
-    if (url.protocol !== currentUrl.protocol) {
-        wlDebug(`Cacao whitelist: ${href} does not match protocol ${url.protocol}`);
-        continue;
-    }
-    const hostRe = buildRegExp(decodeURIComponent(url.host));
-    if (!currentUrl.host.match(hostRe)) {
-        wlDebug(`Cacao whitelist: ${href} does not match host ${hostRe}`);
-        continue;
-    }
-    const pathRe = buildRegExp(url.pathname, '(/.*|)');
-    if (!currentUrl.pathname.match(pathRe)) {
-        wlDebug(`Cacao whitelist: ${href} does not match path ${pathRe}`);
-        continue;
+function handleInit(firstSettings: CacaoSettings) {
+    let settings = firstSettings;
+
+    const href = document.URL;
+    const currentUrl = new URL(href);
+
+    function wlDebug(...args: any[]) {
+        if (settings.whitelistDebug) {
+            console.log(...args);
+        }
     }
 
-    wlDebug(`Cacao whitelist: ${href} matched ${urlStr}`);
-    doInstall = true;
-    break;
-}
+    function buildRegExp(pattern: string, toAppend = '') {
+        const re = pattern.replace(/[\\\*\$\^\.\*\+]/g, (substring) => {
+            if (substring === '*') {
+                return '.*';
+            }
+            else {
+                return '\\' + substring;
+            }
+        });
+        return new RegExp(`^${re}${toAppend}\$`, 'i');
+    }
 
-if (!doInstall) {
-    console.log(`Cacao ignoring ${href}; not whitelisted`);
-}
-else {
+    let doInstall = false;
+    for (const urlStr of settings.whitelist) {
+        const noWildcardProtocol = urlStr.replace(/^\*:/, 'http:');
+        const url = new URL(noWildcardProtocol);
+        if (noWildcardProtocol === urlStr && url.protocol !== currentUrl.protocol) {
+            wlDebug(`Cacao whitelist: ${href} does not match protocol ${url.protocol}`);
+            continue;
+        }
+        const hostRe = buildRegExp(decodeURIComponent(url.host));
+        if (!currentUrl.host.match(hostRe)) {
+            wlDebug(`Cacao whitelist: ${href} does not match host ${hostRe}`);
+            continue;
+        }
+        const pathRe = buildRegExp(url.pathname, '(/.*|)');
+        if (!currentUrl.pathname.match(pathRe)) {
+            wlDebug(`Cacao whitelist: ${href} does not match path ${pathRe}`);
+            continue;
+        }
+
+        wlDebug(`Cacao whitelist: ${href} matched ${urlStr}`);
+        doInstall = true;
+        break;
+    }
+
+    if (!doInstall) {
+        console.log(`Cacao ignoring ${href}; not whitelisted`);
+        return;
+    }
+
     console.log(`Cacao hooking into ${href} Fetch API`);
     function send(obj: any, transferable: Array<Transferable> = []) {
         window.postMessage(obj, '*');
     }
     let abortControllers: {[id: number]: AbortController} = {};
     let responses: {[id: number]: Response} = {};
+
+    // Allow updates to settings.
+    browser.storage.onChanged.addListener(function updateSettings(newSettings) {
+        console.log(`Cacao updating settings`);
+        for (const key in newSettings) {
+            settings[key] = newSettings[key].newValue;
+        }
+        send({type: 'CACAO_FETCH_CONFIG',
+            config: {
+                pathMap: settings.pathMap,
+                proxyHosts: settings.magic,
+            },
+        });
+    });
+
     window.addEventListener('message', function(event) {
         if (event.source !== window) {
             return;
@@ -178,7 +209,11 @@ else {
 
             case 'CACAO_FETCH_INIT': {
                 send({type: 'CACAO_FETCH_CONFIG',
-                    config: {pathMap, proxyHosts}});
+                    config: {
+                        pathMap: settings.pathMap,
+                        proxyHosts: settings.magic,
+                    },
+                });
                 break;
             }
         }

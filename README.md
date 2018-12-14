@@ -2,7 +2,13 @@
 
 Cacao is a Cross-Origin (CORS) proxy.  It allows Javascript running in a web browser to access a remote HTTP resource without cross-origin restrictions.  It runs on several different platforms, and essentially works by adding a `Access-Control-Allow-Origin: *` header to an HTTP response.
 
-This Cacao Browser Extension is for Chrome and Firefox browsers.  For now, you can:
+This Cacao Browser Extension is for Chrome and Firefox browsers.  It may work on Edge, but it has not yet been tested.
+
+A production version of the extension is available from:
+
+* https://chrome.google.com/webstore/detail/cacao-cors-proxy/ghkpkeholelocigdnkijbhilchjekppk
+
+To run a development copy from this source tree, you can:
 
 1. Run:
 ```
@@ -14,15 +20,13 @@ $ npm run build
 - On Chrome, go to `chrome://extensions` and `Load unpacked`
 - On Firefox, go to `about:debugging` and `Load Temporary Add-on...`
 
-3. Enjoy the bugs!  (See below.)
+3. Go to the Cacao extension options page (about:addons on Firefox) and configure your proxy settings.
 
-## FIXME: State of Brokenness
-
-This extension does not currently work as intended.  See TODO.md.
+Note in Chrome that to use the extension on HTTPS sites, you will need to click the "shield" icon to allow the Cacao script to mix HTTP and HTTPS content.  This step is not necessary for Firefox.
 
 ## Current Architecture
 
-The Cacao Browser Extension's architecture is to implement the `{cacao: true}` option for the Fetch API, then to tunnel the response data back from the content script, where it can bypass CORS.
+The Cacao Browser Extension's architecture is to implement an interceptor for the Fetch API, then to tunnel requests for "magic hostports" to the content script, where it can bypass CORS.
 
 See [Cacao Proxy](https://github.com/michaelfig/cacao) for more details.
 

@@ -1,5 +1,6 @@
 #! /bin/sh
 rm -rf build cacao-extension.zip
-mkdir build
-cp -a manifest.json *.js *.png build/
-(cd build && zip ../cacao-extension.zip *)
+mkdir -p build/options
+cp -a manifest.json *.js *.js.map *.png build/
+cp -a options/*.js options/*.js.map options/*.html build/options/
+(cd build && zip -r ../cacao-extension.zip *)

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Cacao CORS Proxy",
-    "version": "0.2.0",
+    "version": "1.0.0",
 
     "author": "Michael FIG",
 
@@ -17,8 +17,13 @@
     "permissions": [
         "*://*/*",
         "webRequest",
-        "webRequestBlocking"
+        "webRequestBlocking",
+        "storage"
     ],
+
+    "options_ui": {
+        "page": "options/cacao-options.html"
+    },
 
     "content_scripts": [
         {

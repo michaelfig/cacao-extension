@@ -109,7 +109,7 @@ interface Window {
 
             case 'CACAO_FETCH_REJECTED': {
                 const {id, reason} = event.data;
-                console.log(`Cacao fetch rejecting ${id}: ${reason}`);
+                console.log(`Cacao fetch rejecting ${id}`, reason);
                 const connector = connectors[id];
                 if (connector) {
                     delete connectors[id];
@@ -137,6 +137,7 @@ interface Window {
 
     // Taken verbatim from cacao/lib/src/resolve.dart.
     function resolve(requested: URL, prepend: string, add = '') {
+        console.log(`Cacao fetch resolving`, requested, prepend, add);
         const pre = new URL(prepend);
         let path: string;
         if (pre.pathname.endsWith('/')) {
@@ -214,6 +215,7 @@ interface Window {
             return oldFetch(input, init);
         }
         catch (e) {
+            console.log('Cacao error fetching', e);
             return Promise.reject(e);
         }
     }
