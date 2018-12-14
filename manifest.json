@@ -27,16 +27,10 @@
             "js": [
                 "browser-polyfill.min.js",
                 "cacao-server.js"
-            ]
+            ],
+            "run_at": "document_start"
         }
     ],
-
-    "background": {
-        "scripts": [
-            "browser-polyfill.min.js",
-            "cacao-bg.js"
-        ]
-    },
 
     "web_accessible_resources": [
         "cacao-client.js"
