@@ -22,7 +22,7 @@ This extension does not currently work as intended.  See TODO.md.
 
 ## Current Architecture
 
-The Cacao Browser Extension's architecture is to redirect http://localhost:9000/SOME-PATH to http://localhost:SOME-PORT/SOME-OTHER-PATH in the webextension, then use a PAC proxy script (also managed by the Cacao Browser Extension) to intercept http://localhost:SOME-PORT requests and proxy them to a different host.
+The Cacao Browser Extension's architecture is to implement the `{cacao: true}` option for the Fetch API, then to tunnel the response data back from the content script, where it can bypass CORS.
 
 See [Cacao Proxy](https://github.com/michaelfig/cacao) for more details.
 

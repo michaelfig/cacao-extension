@@ -4,20 +4,21 @@ console.log(`Cacao extension loading`);
 // FIXME: Derive from config.
 const matchPatterns = [
     `*://*.poc.ts.liveblockauctions.com/ms/publish.html`,
+    `*://localhost/publish.html`,
 //    `file:///Users/michael/src/*`
 ];
 
-const whitelist = new Set<string>([`http://216.8.159.21/mjpg/video.mjpg`]);
-
-// Register our response header rewriter.
-browser.contentScripts.register({
-    matches: matchPatterns,
-    js: [{
-        file: 'browser-polyfill.min.js',
-    }, {
-        file: 'cacao-fetch.js',
-    }],
-    runAt: 'document_start',
-}).then(results => {
-    console.log(`Cacao content script results:`, results);
-});
+// Register our content script.
+if (browser.contentScripts) {
+    browser.contentScripts.register({
+        matches: matchPatterns,
+        js: [{
+            file: 'browser-polyfill.min.js',
+        }, {
+            file: 'cacao-server.js',
+        }],
+        runAt: 'document_start',
+    }).then(results => {
+        console.log(`Cacao content script results:`, results);
+    });
+}

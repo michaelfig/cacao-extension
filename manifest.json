@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Cacao CORS Proxy",
-    "version": "0.2.0-a1",
+    "version": "0.2.0",
 
     "author": "Michael FIG",
 
@@ -20,10 +20,25 @@
         "webRequestBlocking"
     ],
 
+    "content_scripts": [
+        {
+            "matches": ["*://*.poc.ts.liveblockauctions.com/ms/publish.html",
+                "*://localhost/publish.html"],
+            "js": [
+                "browser-polyfill.min.js",
+                "cacao-server.js"
+            ]
+        }
+    ],
+
     "background": {
         "scripts": [
             "browser-polyfill.min.js",
             "cacao-bg.js"
         ]
-    }
+    },
+
+    "web_accessible_resources": [
+        "cacao-client.js"
+    ]
 }

@@ -1,7 +1,7 @@
-* Blocking Chrome issue: Proxy PAC scripts are not called for localhost (or 127.0.0.1).  This means that Cacao cannot be used for its intended function: to allow the fetch API to fetch localhost URLs that are proxied to remote hosts.
+* Map URLs to backend fetch parameters, so we can properly proxy any kind of Fetch URL.
 
-* Blocking Firefox issue: a browser.webRequest listener registered for `http://127.0.0.1/*` is not called when the origin of the document is not localhost or file://.  This means Cacao cannot be used for its intended function: to allow the fetch API to fetch localhost URLs that are cross-origin.
+* Remove cacao Fetch option (including 'downgrade'), and just use http://127.0.0.1:9000/* URIs to achieve mixed content.  Test with HTTPS.
 
-* Report the above issues and make note of their issue number in the point above.
+* Implement an options_ui page.  Add the "storage" manifest permission, and use it to communicate options.  See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/options_ui
 
-* After those issues are resolved, implement a options_ui page.  Add the "storage" manifest permission, and use it to communicate options.  See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/options_ui
+* Add a `X-Cacao-Forwarded: <URL>` and `X-Cacao-Implementation: Cacao Browser Extension's Fetch API` header, adding to `Access-Control-Expose-Headers`.
