@@ -4,9 +4,10 @@ Cacao is a Cross-Origin (CORS) proxy.  It allows Javascript running in a web bro
 
 This Cacao Browser Extension is for Chrome and Firefox browsers.  It may work on Edge, but it has not yet been tested.
 
-A production version of the extension is available from:
+The production release of the extension is available from:
 
-* https://chrome.google.com/webstore/detail/cacao-cors-proxy/ghkpkeholelocigdnkijbhilchjekppk
+* [Chrome Web Store](https://chrome.google.com/webstore/detail/cacao-cors-proxy/ghkpkeholelocigdnkijbhilchjekppk)
+* [Firefox Add-ons](https://addons.mozilla.org/en-CA/firefox/addon/cacao-cors-proxy/)
 
 To run a development copy from this source tree, you can:
 
